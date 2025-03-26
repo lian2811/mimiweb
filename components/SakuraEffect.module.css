@@ -1,0 +1,68 @@
+.sakuraContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9;
+  overflow: hidden;
+}
+
+.sakura {
+  position: absolute;
+  background-color: #FFB7C5;
+  border-radius: 12px 1px 12px 1px;
+  top: -10%;
+  animation-name: fall, sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: normal, alternate;
+  will-change: transform, opacity, top;
+}
+
+.sakura:nth-child(even) {
+  background-color: #FFC9D8;
+}
+
+.sakura:nth-child(3n) {
+  background-color: #FFD4E1;
+}
+
+/* 櫻花下落動畫 */
+@keyframes fall {
+  0% {
+    top: -10%;
+    transform: translateX(0) rotate(0deg) scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    transform: translateX(20px) rotate(360deg) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* 櫻花飄動動畫，使用 GPU 加速提高效能 */
+@keyframes sway {
+  0% {
+    margin-left: 0px;
+    transform: rotate(3deg) translateZ(0);
+  }
+  25% {
+    margin-left: 8px;
+    transform: rotate(-5deg) translateZ(0);
+  }
+  50% {
+    margin-left: -8px;
+    transform: rotate(10deg) translateZ(0);
+  }
+  75% {
+    margin-left: 5px;
+    transform: rotate(-10deg) translateZ(0);
+  }
+  100% {
+    margin-left: -5px;
+    transform: rotate(5deg) translateZ(0);
+  }
+}

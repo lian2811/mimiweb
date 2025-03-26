@@ -1,0 +1,100 @@
+{
+  "navigation": {
+    "home": "首頁",
+    "about": "關於我們",
+    "services": "服務",
+    "pricing": "價格",
+    "AI Showcase": "產品展示",
+    "login": "登入",
+    "register": "註冊",
+    "dashboard": "控制台",
+    "subscription": "訂閱服務",
+    "language": "語言",
+    "theme": "主題",
+    "lightMode": "亮色模式",
+    "darkMode": "暗色模式"
+  },
+  "home": {
+    "hero": {
+      "title": "歡迎來到 MiMi AI",
+      "subtitle": "為您的未來提供創新的 AI 解決方案",
+      "cta": "立即開始"
+    },
+    "features": {
+      "title": "我們的特色",
+      "feature1": {
+        "title": "智能分析",
+        "description": "先進的 AI 演算法幫助您分析數據"
+      },
+      "feature2": {
+        "title": "輕鬆整合",
+        "description": "與您現有系統無縫整合"
+      },
+      "feature3": {
+        "title": "全天候支援",
+        "description": "我們的團隊隨時準備協助您"
+      }
+    },
+    "testimonials": {
+      "title": "客戶評價",
+      "readMore": "閱讀更多"
+    }
+  },
+  "about": {
+    "title": "關於 MiMi AI",
+    "mission": "我們的使命",
+    "missionText": "提供創新的 AI 解決方案，協助企業在數字時代成長並取得成功。",
+    "vision": "我們的願景",
+    "visionText": "成為以卓越、創新和客戶滿意度為標誌的領先 AI 服務提供商。",
+    "team": "我們的團隊"
+  },
+  "subscription": {
+    "title": "訂閱 MiMi AI",
+    "plans": "訂閱方案",
+    "basic": {
+      "title": "基本版",
+      "price": "NT$350/月",
+      "features": ["基本 AI 工具訪問權限", "電子郵件支援", "有限的 API 呼叫"]
+    },
+    "pro": {
+      "title": "專業版",
+      "price": "NT$950/月",
+      "features": ["完整訪問所有 AI 工具", "優先支援", "無限制 API 呼叫", "進階分析"]
+    },
+    "enterprise": {
+      "title": "企業版",
+      "price": "聯絡我們",
+      "features": ["客製化 AI 解決方案", "專屬支援團隊", "企業級整合", "客製化分析報告"]
+    },
+    "subscribe": "立即訂閱",
+    "contact": "聯絡銷售"
+  },
+  "auth": {
+    "login": "登入",
+    "register": "註冊",
+    "email": "電子郵件",
+    "password": "密碼",
+    "confirmPassword": "確認密碼",
+    "forgotPassword": "忘記密碼？",
+    "noAccount": "還沒有帳號？",
+    "haveAccount": "已經有帳號？",
+    "signIn": "登入",
+    "signUp": "註冊"
+  },
+  "footer": {
+    "rights": "保留所有權利",
+    "privacy": "隱私政策",
+    "terms": "服務條款",
+    "contact": "聯絡我們"
+  },
+  "common": {
+    "loading": "載入中...",
+    "error": "發生錯誤",
+    "retry": "重試",
+    "cancel": "取消",
+    "save": "儲存",
+    "submit": "提交",
+    "success": "成功！",
+    "languageSwitch": "English"
+  }
+}

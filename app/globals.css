@@ -1,26 +1,214 @@
 @import "tailwindcss";
+@plugin "tailwind-scrollbar";
+@plugin "tailwindcss-animate";
+
+@theme
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #0abab5; /* Tiffany Green */
+  --secondary: #ffb7c5; /* Sakura Pink */
+  --accent: #ffb7c5;
+  --gradient-start: #0abab5;
+  --gradient-mid: #ffb7c5;
+  --gradient-end: #0abab5;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* 添加 tiffany 主題的特殊樣式 */
+.tiffany {
+  --background: #ffffff;
+  --foreground: #333333;
+  --primary: #0abab5; /* Tiffany Green */
+  --secondary: #ffb7c5; /* Sakura Pink */
+  --accent: #ff97b5;
+  --gradient-start: #0abab5;
+  --gradient-mid: #7fe9e6;
+  --gradient-end: #ffb7c5;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #0abab5; /* Tiffany Green */
+    --secondary: #ffb7c5; /* Sakura Pink */
+    --accent: #ffb7c5;
+    --gradient-start: #0abab5;
+    --gradient-mid: #ffb7c5;
+    --gradient-end: #0abab5;
+  }
+  
+  /* 暗色下的 tiffany 主題 */
+  .tiffany {
+    --background: #121212;
+    --foreground: #ffffff;
+    --primary: #20dbd5; /* 亮一點的 Tiffany Green */
+    --secondary: #ffcad5; /* 亮一點的櫻花粉 */
+    --accent: #ff97b5;
+    --gradient-start: #20dbd5;
+    --gradient-mid: #7fe9e6;
+    --gradient-end: #ffcad5;
   }
 }
 
 body {
-  background: var(--background);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    var(--gradient-start) 0%,
+    var(--gradient-mid) 50%,
+    var(--gradient-end) 100%
+  );
+  background-size: 300% 300%;
+  animation: gradient-shift 15s ease infinite;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 可愛的懸浮動畫效果 */
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* 櫻花飄落動畫 */
+@keyframes falling {
+  0% {
+    transform: translateY(-10%) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* 添加泡泡上升動畫 */
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(0) rotate(0);
+    bottom: -5%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-40vh) translateX(10px) rotate(180deg);
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-80vh) translateX(-10px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* 櫻花花瓣元素 */
+.sakura {
+  position: fixed;
+  background-color: var(--secondary);
+  border-radius: 50% 50% 50% 0;
+  width: 15px;
+  height: 15px;
+  animation: falling 10s linear infinite;
+  opacity: 0.7;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(255, 183, 197, 0.3);
+}
+
+/* Tiffany 泡泡元素 */
+.tiffany-bubble {
+  position: fixed;
+  border-radius: 50%;
+  background-color: var(--primary);
+  box-shadow: 0 0 10px rgba(10, 186, 181, 0.5);
+  pointer-events: none;
+  z-index: 0;
+  animation: bubble-rise var(--duration, 8s) ease-in-out var(--delay, 0s) infinite;
+}
+
+/* Tiffany 主題專用的可愛按鈕效果 */
+.tiffany button, .tiffany .btn {
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary);
+  background-color: transparent;
+  color: var(--primary);
+}
+
+.tiffany button:hover, .tiffany .btn:hover {
+  background-color: var(--primary);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(10, 186, 181, 0.3);
+}
+
+/* Tiffany 主題專用的可愛連結效果 */
+.tiffany a {
+  color: var(--primary);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+}
+
+.tiffany a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--secondary);
+  transition: width 0.3s ease;
+}
+
+.tiffany a:hover::after {
+  width: 100%;
 }

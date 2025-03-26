@@ -1,0 +1,100 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "subscription": "Subscription",
+    "language": "Language",
+    "theme": "Theme",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode"
+  },
+  "home": {
+    "hero": {
+      "title": "Welcome to MiMi AI",
+      "subtitle": "Innovative AI Solutions for Your Future",
+      "cta": "Get Started"
+    },
+    "features": {
+      "title": "Our Features",
+      "feature1": {
+        "title": "Smart Analysis",
+        "description": "Advanced AI algorithms to help you analyze data"
+      },
+      "feature2": {
+        "title": "Easy Integration",
+        "description": "Seamlessly integrates with your existing systems"
+      },
+      "feature3": {
+        "title": "24/7 Support",
+        "description": "Our team is always available to assist you"
+      }
+    },
+    "testimonials": {
+      "title": "Customer Testimonials",
+      "readMore": "Read More"
+    }
+  },
+  "about": {
+    "title": "About MiMi AI",
+    "mission": "Our Mission",
+    "missionText": "Providing innovative AI solutions to help businesses grow and succeed in the digital age.",
+    "vision": "Our Vision",
+    "visionText": "To become the leading AI service provider known for excellence, innovation, and customer satisfaction.",
+    "team": "Our Team"
+  },
+  "subscription": {
+    "title": "Subscribe to MiMi AI",
+    "plans": "Subscription Plans",
+    "basic": {
+      "title": "Basic",
+      "price": "$9.99/month",
+      "features": ["Basic AI tools access", "Email support", "Limited API calls"]
+    },
+    "pro": {
+      "title": "Professional",
+      "price": "$29.99/month",
+      "features": ["Full access to all AI tools", "Priority support", "Unlimited API calls", "Advanced analytics"]
+    },
+    "enterprise": {
+      "title": "Enterprise",
+      "price": "Contact Us",
+      "features": ["Custom AI solutions", "Dedicated support team", "Enterprise integration", "Custom analytics"]
+    },
+    "subscribe": "Subscribe Now",
+    "contact": "Contact Sales"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "footer": {
+    "rights": "All Rights Reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact Us"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "submit": "Submit",
+    "success": "Success!",
+    "languageSwitch": "中文"
+  }
+}
