@@ -76,7 +76,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({ apiKey }) => {
     setThinkingStatus('waiting');
 
     try {
-      const response = await fetch('http://localhost/v1/chat-messages', {
+      if (!process.env.ZIWEI_CHAT_baseURL) {
+        throw new Error('ZIWEI_CHAT_baseURL is not defined in the environment variables');
+      }
+      const response = await fetch(process.env.ZIWEI_CHAT_baseURL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

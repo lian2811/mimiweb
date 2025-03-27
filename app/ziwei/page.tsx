@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { astro } from 'iztro';
-import ZiweiChart from '@/components/ZiweiChart';
-import ChatBox from '@/components/ChatBox';
+import ZiweiChart from '@/app/ziwei/ZiweiChart';
+import ChatBox from '@/app/ziwei/ChatBox';
 import FunctionalAstrolabe from 'iztro/lib/astro/FunctionalAstrolabe';
 import { useTranslations } from 'next-intl';
 
@@ -86,7 +86,7 @@ export default function Ziwei() {
             
             {/* ChatBot 區塊 - 替換為自定義聊天室 */}
             <div className="flex-1 overflow-hidden h-[calc(100vh-140px)]">
-                <ChatBox apiKey="app-zUb4Ne1Y9U6nkKYPT7V4qwZB" />
+                <ChatBox apiKey={process.env.ZIWEI_CHAT_API || ''} />
             </div>
 
             {/* 命盤顯示區塊 */}
