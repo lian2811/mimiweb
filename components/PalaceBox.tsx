@@ -59,7 +59,7 @@ const starColorMap: { [key: string]: string } = {
     isLife?: boolean;
   }
   
-  const PalaceBox: React.FC<PalaceBoxProps> = ({ palace, index, isLife }) => {
+  const PalaceBox: React.FC<PalaceBoxProps> = ({ palace, isLife }) => {
     if (!palace) return <div className="bg-gray-50 border rounded-lg h-28" />;
   
     // 合併各類星曜

@@ -12,28 +12,51 @@
     "language": "Language",
     "theme": "Theme",
     "lightMode": "Light Mode",
-    "darkMode": "Dark Mode"
+    "darkMode": "Dark Mode",
+    "ai-magic": "AI Magic",
+    "AI Showcase": "AI Showcase"
   },
   "home": {
     "hero": {
-      "title": "Welcome to MiMi AI",
+      "title1": "Welcome to",
+      "titleHighlight": "MiMi AI",
+      "title2": "Assistant",
       "subtitle": "Innovative AI Solutions for Your Future",
-      "cta": "Get Started"
+      "primaryCta": "Try AI Magic",
+      "secondaryCta": "Learn More",
+      "chatExample": {
+        "user": "Can you help me understand my destiny?",
+        "ai": "Of course! I can analyze your birth chart and provide insights about your life path, strengths, and potential challenges.",
+        "placeholder": "Ask something about your destiny...",
+        "greeting": "Hello! I'm MiMi AI Assistant. How can I assist you today?"
+      },
+      "trustedBy": "Trusted by"
     },
     "features": {
       "title": "Our Features",
+      "subtitle": "Discover the powerful capabilities of MiMi AI",
+      "learnMore": "Learn more",
       "feature1": {
         "title": "Smart Analysis",
-        "description": "Advanced AI algorithms to help you analyze data"
+        "description": "Advanced AI algorithms to help you analyze data and gain valuable insights"
       },
       "feature2": {
         "title": "Easy Integration",
-        "description": "Seamlessly integrates with your existing systems"
+        "description": "Seamlessly integrates with your existing systems and workflows"
       },
       "feature3": {
         "title": "24/7 Support",
-        "description": "Our team is always available to assist you"
+        "description": "Our team is always available to assist you whenever you need help"
       }
+    },
+    "cta": {
+      "title": "Ready to transform your experience?",
+      "description": "Join thousands of users who have already enhanced their lives with MiMi AI's powerful insights and guidance.",
+      "primaryButton": "Get Started",
+      "secondaryButton": "Learn More",
+      "highlightTitle": "Limited Time Offer",
+      "highlightText": "Subscribe now and get access to all premium features",
+      "discount": "30% OFF"
     },
     "testimonials": {
       "title": "Customer Testimonials",
@@ -50,27 +73,85 @@
   },
   "subscription": {
     "title": "Subscribe to MiMi AI",
-    "plans": "Subscription Plans",
-    "basic": {
-      "title": "Basic",
-      "price": "$9.99/month",
-      "features": ["Basic AI tools access", "Email support", "Limited API calls"]
+    "subtitle": "Choose the plan that best suits your needs. We offer a variety of options to meet different requirements and budgets.",
+    "monthly": "Monthly",
+    "annually": "Annually",
+    "savePercent": "Save 20%",
+    "perMonth": "/month",
+    "perMonthAnnual": "/month (billed annually)",
+    "popular": "Most Popular",
+    "includes": "Plan Includes",
+    "plans": {
+      "free": {
+        "name": "Free Plan",
+        "description": "Perfect for first-time users",
+        "price": "$0",
+        "cta": "Get Started",
+        "features": {
+          "feature1": "Basic AI tools access",
+          "feature2": "3 free queries per day",
+          "feature3": "Basic result analysis",
+          "feature4": "Community support"
+        }
+      },
+      "pro": {
+        "name": "Pro Plan",
+        "description": "Ideal for serious users",
+        "priceMonthly": "$29.99",
+        "priceAnnual": "$24.99",
+        "cta": "Subscribe to Pro",
+        "features": {
+          "feature1": "Unlimited AI queries",
+          "feature2": "Priority processing",
+          "feature3": "Advanced result analysis",
+          "feature4": "Professional chart generation",
+          "feature5": "Priority email support",
+          "feature6": "Access to all premium features"
+        }
+      },
+      "enterprise": {
+        "name": "Enterprise Plan",
+        "description": "Designed for professional teams and businesses",
+        "price": "Contact Us",
+        "cta": "Contact Sales",
+        "features": {
+          "feature1": "Unlimited enterprise-level access",
+          "feature2": "Dedicated support manager",
+          "feature3": "Enterprise-grade API integration",
+          "feature4": "Custom analytics reports",
+          "feature5": "24/7 technical support"
+        }
+      }
     },
-    "pro": {
-      "title": "Professional",
-      "price": "$29.99/month",
-      "features": ["Full access to all AI tools", "Priority support", "Unlimited API calls", "Advanced analytics"]
-    },
-    "enterprise": {
-      "title": "Enterprise",
-      "price": "Contact Us",
-      "features": ["Custom AI solutions", "Dedicated support team", "Enterprise integration", "Custom analytics"]
-    },
-    "subscribe": "Subscribe Now",
-    "contact": "Contact Sales"
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "How do I choose the right plan for me?",
+      "a1": "Consider your usage frequency and the features you need. The Free Plan is great for first-time users, the Pro Plan is ideal for frequent users, and the Enterprise Plan is perfect for teams needing custom solutions.",
+      "q2": "Can I change or cancel my subscription at any time?",
+      "a2": "Yes, you can change or cancel your subscription anytime in your account settings. Monthly subscriptions can be canceled before the end of the month, and annual subscriptions will remain active until the end of the subscription period.",
+      "q3": "What payment methods do you accept?",
+      "a3": "We accept major credit cards, PayPal, and bank transfers in some regions. Enterprise customers can opt for invoice payments.",
+      "q4": "What happens if I upgrade my subscription?",
+      "a4": "When you upgrade, we will prorate the cost difference for the remaining days. You only pay the difference for the upgraded plan without being double-charged."
+    }
   },
   "auth": {
-    "login": "Login",
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Log in to your account",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email",
+      "emailError": "Email is required",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "passwordError": "Password is required",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "loginButton": "Sign In",
+      "loggingIn": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Sign up"
+    },
     "register": "Register",
     "email": "Email",
     "password": "Password",
@@ -82,10 +163,55 @@
     "signUp": "Sign Up"
   },
   "footer": {
+    "tagline": "Innovative AI Solutions",
+    "products": "Products",
+    "aiShowcase": "AI Showcase",
+    "pricing": "Pricing",
+    "company": "Company",
+    "about": "About Us",
+    "blog": "Blog",
+    "contact": "Contact Us",
+    "address": "Xinyi District, Taipei City",
     "rights": "All Rights Reserved",
     "privacy": "Privacy Policy",
-    "terms": "Terms of Service",
-    "contact": "Contact Us"
+    "terms": "Terms of Service"
+  },
+  "ai-magic": {
+    "title": "AI Magic Showcase",
+    "subtitle": "Experience our AI demos! From Purple Star Astrology to Tarot reading, explore the magical world of AI.",
+    "examplesTitle": "AI Demo Examples",
+    "examples": {
+      "ziwei": {
+        "title": "Purple Star Astrology",
+        "description": "Personal astrology analysis based on birth date and time",
+        "buttonText": "View Purple Star Chart",
+        "comingSoon": "Coming Soon!"
+      },
+      "tarot": {
+        "title": "Tarot Reading",
+        "description": "Explore your future through digital tarot card reading",
+        "comingSoon": "Coming Soon! Discover the ancient wisdom of tarot cards."
+      },
+      "astrology": {
+        "title": "Western Astrology",
+        "description": "Western zodiac horoscope and compatibility analysis",
+        "comingSoon": "Coming Soon! Explore the stars and their influence on your life."
+      },
+      "numerology": {
+        "title": "Numerology",
+        "description": "Discover the meaning behind your personal numbers",
+        "comingSoon": "Coming Soon! Uncover the numerical patterns in your life."
+      }
+    },
+    "tryIt": "Try it now"
+  },
+  "login": {
+    "welcomeBack": "Welcome Back",
+    "loginPrompt": "Log in to your account"
+  },
+  "register": {
+    "createAccount": "Create an Account",
+    "joinUs": "Join our community today"
   },
   "common": {
     "loading": "Loading...",
@@ -96,5 +222,37 @@
     "submit": "Submit",
     "success": "Success!",
     "languageSwitch": "中文"
+  },
+  "ziwei": {
+    "title": "Purple Star Astrology Chart",
+    "chartGenerationError": "An error occurred while generating the chart",
+    "chartGenerating": "Generating chart...",
+    "chartPlaceholder": "Enter birth information to generate a chart or let AI create one for you",
+    "generateChart": "Generate Chart",
+    "form": {
+      "calendarType": "Calendar Type",
+      "solar": "Solar",
+      "lunar": "Lunar",
+      "birthDate": "Birth Date",
+      "birthTime": "Birth Time",
+      "gender": "Gender",
+      "female": "Female",
+      "male": "Male"
+    },
+    "hours": {
+      "0": "Early Zi Hour (0:00-1:00)",
+      "1": "Chou Hour (1:00-3:00)",
+      "2": "Yin Hour (3:00-5:00)",
+      "3": "Mao Hour (5:00-7:00)",
+      "4": "Chen Hour (7:00-9:00)",
+      "5": "Si Hour (9:00-11:00)",
+      "6": "Wu Hour (11:00-13:00)",
+      "7": "Wei Hour (13:00-15:00)",
+      "8": "Shen Hour (15:00-17:00)",
+      "9": "You Hour (17:00-19:00)",
+      "10": "Xu Hour (19:00-21:00)",
+      "11": "Hai Hour (21:00-23:00)",
+      "12": "Late Zi Hour (23:00-0:00)"
+    }
   }
 }

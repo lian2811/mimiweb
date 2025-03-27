@@ -3,8 +3,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import AIExamples from '@/components/AIExamples';
+import { useTranslations } from 'next-intl';
 
 export default function AIMagic() {
+  const t = useTranslations('ai-magic');
+  
   return (
     <div className="min-h-screen pt-24">
       <div className="min-h-screen w-full py-4 px-4 bg-[var(--background)] text-[var(--foreground)]">
@@ -17,10 +20,10 @@ export default function AIMagic() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] py-8">
-              AI 魔法展示
+              {t('title')}
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              體驗我們的 AI 展示！從紫微斗數到塔羅牌，探索神奇的 AI 世界。
+              {t('subtitle')}
             </p>
           </motion.div>
 

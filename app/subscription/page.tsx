@@ -1,13 +1,15 @@
-"use client";
+"use client"
 
+import { useState } from "react";
 import { usePathname } from "next/navigation";
-import HomeContent from "./HomeContent";
+import SubscriptionContent from "./SubscriptionContent";
 
-export default function Home() {
+export default function SubscriptionPage() {
+  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly');
   const pathname = usePathname();
-  const locale = pathname.split("/")[1];
+  const locale = pathname.split('/')[1];
 
-  // 動畫變體
+  // Animation variants
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -26,10 +28,12 @@ export default function Home() {
       }
     }
   };
-
+  
   return (
-    <HomeContent 
+    <SubscriptionContent 
       locale={locale}
+      billingPeriod={billingPeriod}
+      setBillingPeriod={setBillingPeriod}
       fadeIn={fadeIn}
       staggerContainer={staggerContainer}
     />

@@ -1,13 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 
 export default function About() {
   const t = useTranslations();
-  const pathname = usePathname();
-  const locale = pathname.split("/")[1];
 
   // 動畫變體
   const fadeIn = {
@@ -294,7 +291,7 @@ export default function About() {
             >
               <div className="w-40 h-40 rounded-full overflow-hidden mb-4 bg-gradient-to-br from-green-400 to-yellow-500 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-800">
-                  <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                  <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex itemsCenter justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 text-gray-400 dark:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                     </svg>

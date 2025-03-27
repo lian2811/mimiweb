@@ -12,28 +12,50 @@
     "language": "語言",
     "theme": "主題",
     "lightMode": "亮色模式",
-    "darkMode": "暗色模式"
+    "darkMode": "暗色模式",
+    "contact": "聯絡我們",
+    "ai-magic": "AI 魔法"
   },
   "home": {
     "hero": {
-      "title": "歡迎來到 MiMi AI",
+      "title1": "歡迎來到",
+      "titleHighlight": "MiMi AI",
       "subtitle": "為您的未來提供創新的 AI 解決方案",
-      "cta": "立即開始"
+      "primaryCta": "嘗試 AI 魔法",
+      "secondaryCta": "了解更多",
+      "chatExample": {
+        "user": "你能幫我理解我的命運嗎？",
+        "ai": "當然可以！我可以分析您的星盤，提供有關您人生路徑、優勢和潛在挑戰的見解。",
+        "placeholder": "詢問關於您命運的問題...",
+        "greeting": "你好！我是 MiMi AI 助手，有什麼我可以幫助你的嗎？"
+      },
+      "trustedBy": "受信任的合作夥伴"
     },
     "features": {
       "title": "我們的特色",
+      "subtitle": "探索 MiMi AI 的強大功能",
+      "learnMore": "了解更多",
       "feature1": {
         "title": "智能分析",
-        "description": "先進的 AI 演算法幫助您分析數據"
+        "description": "先進的 AI 演算法幫助您分析數據並獲得有價值的見解"
       },
       "feature2": {
         "title": "輕鬆整合",
-        "description": "與您現有系統無縫整合"
+        "description": "與您現有系統和工作流程無縫整合"
       },
       "feature3": {
         "title": "全天候支援",
-        "description": "我們的團隊隨時準備協助您"
+        "description": "我們的團隊隨時準備協助您，無論您何時需要幫助"
       }
+    },
+    "cta": {
+      "title": "準備好改變您的體驗了嗎？",
+      "description": "加入數千名已經通過 MiMi AI 的強大見解和指導來提升生活質量的用戶。",
+      "primaryButton": "立即開始",
+      "secondaryButton": "了解更多",
+      "highlightTitle": "限時優惠",
+      "highlightText": "立即訂閱，獲得所有高級功能的訪問權限",
+      "discount": "7折優惠"
     },
     "testimonials": {
       "title": "客戶評價",
@@ -50,27 +72,85 @@
   },
   "subscription": {
     "title": "訂閱 MiMi AI",
-    "plans": "訂閱方案",
-    "basic": {
-      "title": "基本版",
-      "price": "NT$350/月",
-      "features": ["基本 AI 工具訪問權限", "電子郵件支援", "有限的 API 呼叫"]
+    "subtitle": "選擇最適合您需求的方案。我們提供多種選項，滿足不同需求與預算。",
+    "monthly": "月繳",
+    "annually": "年繳",
+    "savePercent": "省 20%",
+    "perMonth": "/月",
+    "perMonthAnnual": "/月（年繳）",
+    "popular": "最受歡迎",
+    "includes": "方案包含",
+    "plans": {
+      "free": {
+        "name": "免費版",
+        "description": "適合初次使用者",
+        "price": "NT$0",
+        "cta": "開始使用",
+        "features": {
+          "feature1": "基本 AI 工具訪問",
+          "feature2": "每日 3 次免費查詢",
+          "feature3": "基本結果分析",
+          "feature4": "社區支援"
+        }
+      },
+      "pro": {
+        "name": "專業版",
+        "description": "適合認真的使用者",
+        "priceMonthly": "NT$950",
+        "priceAnnual": "NT$760",
+        "cta": "訂閱專業版",
+        "features": {
+          "feature1": "無限 AI 查詢次數",
+          "feature2": "優先順序處理",
+          "feature3": "進階結果分析",
+          "feature4": "專業圖表生成",
+          "feature5": "優先電子郵件支援",
+          "feature6": "所有付費功能使用權"
+        }
+      },
+      "enterprise": {
+        "name": "企業版",
+        "description": "適合專業團隊與企業",
+        "price": "聯絡我們",
+        "cta": "聯絡銷售團隊",
+        "features": {
+          "feature1": "無限企業級訪問",
+          "feature2": "專屬支援經理",
+          "feature3": "企業級 API 整合",
+          "feature4": "自訂分析報告",
+          "feature5": "全年全天候技術支援"
+        }
+      }
     },
-    "pro": {
-      "title": "專業版",
-      "price": "NT$950/月",
-      "features": ["完整訪問所有 AI 工具", "優先支援", "無限制 API 呼叫", "進階分析"]
-    },
-    "enterprise": {
-      "title": "企業版",
-      "price": "聯絡我們",
-      "features": ["客製化 AI 解決方案", "專屬支援團隊", "企業級整合", "客製化分析報告"]
-    },
-    "subscribe": "立即訂閱",
-    "contact": "聯絡銷售"
+    "faq": {
+      "title": "常見問題",
+      "q1": "如何選擇適合我的方案？",
+      "a1": "考慮您的使用頻率和需要的功能。免費版適合初次體驗，專業版適合頻繁使用者，企業版則適合需要定制解決方案的團隊。",
+      "q2": "我可以隨時更改或取消訂閱嗎？",
+      "a2": "是的，您可以隨時在帳戶設置中更改或取消訂閱。按月訂閱可在當月結束前取消，年度訂閱將在訂閱期結束前提供服務。",
+      "q3": "付款方式有哪些？",
+      "a3": "我們接受主要信用卡、PayPal 和部分地區的銀行轉帳。企業客戶可選擇發票付款方式。",
+      "q4": "如果我升級訂閱，會怎麼計費？",
+      "a4": "升級時，我們會按比例計算剩餘天數的費用差額。您只需支付升級後的差價，不會重複計費。"
+    }
   },
   "auth": {
-    "login": "登入",
+    "login": {
+      "title": "歡迎回來",
+      "subtitle": "登入您的帳戶",
+      "emailLabel": "電子郵件",
+      "emailPlaceholder": "輸入您的電子郵件",
+      "emailError": "請輸入電子郵件",
+      "passwordLabel": "密碼",
+      "passwordPlaceholder": "輸入您的密碼",
+      "passwordError": "請輸入密碼",
+      "rememberMe": "記住我",
+      "forgotPassword": "忘記密碼？",
+      "loginButton": "登入",
+      "loggingIn": "登入中...",
+      "noAccount": "還沒有帳號？",
+      "registerLink": "立即註冊"
+    },
     "register": "註冊",
     "email": "電子郵件",
     "password": "密碼",
@@ -82,10 +162,55 @@
     "signUp": "註冊"
   },
   "footer": {
+    "tagline": "創新的 AI 解決方案",
+    "products": "產品",
+    "aiShowcase": "AI 展示",
+    "pricing": "價格",
+    "company": "公司",
+    "about": "關於我們",
+    "blog": "部落格",
+    "contact": "聯絡我們",
+    "address": "台北市信義區",
     "rights": "保留所有權利",
     "privacy": "隱私政策",
-    "terms": "服務條款",
-    "contact": "聯絡我們"
+    "terms": "服務條款"
+  },
+  "ai-magic": {
+    "title": "AI 魔法展示",
+    "subtitle": "體驗我們的 AI 展示！從紫微斗數到塔羅牌，探索神奇的 AI 世界。",
+    "examplesTitle": "AI 展示範例",
+    "examples": {
+      "ziwei": {
+        "title": "紫微斗數",
+        "description": "基於出生日期和時間的個人星盤分析",
+        "buttonText": "查看紫微星盤",
+        "comingSoon": "敬請期待！"
+      },
+      "tarot": {
+        "title": "塔羅牌占卜",
+        "description": "通過數字塔羅牌來探索你的未來",
+        "comingSoon": "功能即將推出！探索塔羅牌的古老智慧。"
+      },
+      "astrology": {
+        "title": "西方星座占星術",
+        "description": "西方星座星相和相容性分析",
+        "comingSoon": "功能即將推出！探索星座對你生活的影響。"
+      },
+      "numerology": {
+        "title": "數字命理學",
+        "description": "探索你個人數字背後的含義",
+        "comingSoon": "功能即將推出！探索數字與你命運的神秘連結。"
+      }
+    },
+    "tryIt": "立即嘗試"
+  },
+  "login": {
+    "welcomeBack": "歡迎回來",
+    "loginPrompt": "登入您的帳戶"
+  },
+  "register": {
+    "createAccount": "創建帳戶",
+    "joinUs": "今天加入我們的社區"
   },
   "common": {
     "loading": "載入中...",
@@ -96,5 +221,37 @@
     "submit": "提交",
     "success": "成功！",
     "languageSwitch": "English"
+  },
+  "ziwei": {
+    "title": "紫微斗數命盤",
+    "chartGenerationError": "生成紫微命盤時發生錯誤",
+    "chartGenerating": "命盤生成中...",
+    "chartPlaceholder": "輸入生日資訊可以生成命盤或AI親自為您排盤",
+    "generateChart": "生成命盤",
+    "form": {
+      "calendarType": "出生曆法",
+      "solar": "陽曆",
+      "lunar": "農曆",
+      "birthDate": "出生日期",
+      "birthTime": "出生時辰",
+      "gender": "性別",
+      "female": "女",
+      "male": "男"
+    },
+    "hours": {
+      "0": "早子時 (0:00-1:00)",
+      "1": "丑時 (1:00-3:00)",
+      "2": "寅時 (3:00-5:00)",
+      "3": "卯時 (5:00-7:00)",
+      "4": "辰時 (7:00-9:00)",
+      "5": "巳時 (9:00-11:00)",
+      "6": "午時 (11:00-13:00)",
+      "7": "未時 (13:00-15:00)",
+      "8": "申時 (15:00-17:00)",
+      "9": "酉時 (17:00-19:00)",
+      "10": "戌時 (19:00-21:00)",
+      "11": "亥時 (21:00-23:00)",
+      "12": "晚子時 (23:00-0:00)"
+    }
   }
 }

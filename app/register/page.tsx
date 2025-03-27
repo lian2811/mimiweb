@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -53,6 +53,7 @@ export default function Register() {
       router.push(`/${locale}/login`);
     } catch (err) {
       setError("註冊失敗。請稍後再試。");
+      console.error("註冊錯誤:", err);
     } finally {
       setIsLoading(false);
     }
