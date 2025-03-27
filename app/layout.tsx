@@ -10,6 +10,11 @@ import {getLocale} from 'next-intl/server';
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const metadata = {
+  title: 'MiMi AI',
+  description: 'MiMi AI',
+};
+
 export default async function RootLayout({
   children,
 }: {
