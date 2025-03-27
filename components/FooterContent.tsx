@@ -5,12 +5,10 @@ import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from "lucide-react
 
 // Define props interface
 interface FooterContentProps {
-  locale: string;
   currentYear: number;
 }
 
 export default function FooterContent({
-  locale,
   currentYear
 }: FooterContentProps) {
   // Use translations in the server component
@@ -22,7 +20,7 @@ export default function FooterContent({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1">
-            <Link href={`/${locale}`} className="flex items-center">
+            <Link href={`/`} className="flex items-center">
               <span className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent">
                 MiMi AI
               </span>
@@ -50,12 +48,12 @@ export default function FooterContent({
             </h3>
             <ul className="mt-4 space-y-2">
               <li>
-                <Link href={`/${locale}/ai-magic`} className="text-base text-gray-600 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-400">
+                <Link href={`/ai-magic`} className="text-base text-gray-600 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-400">
                   {t('footer.aiShowcase')}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/subscription`} className="text-base text-gray-600 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-400">
+                <Link href={`/subscription`} className="text-base text-gray-600 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-400">
                   {t('footer.pricing')}
                 </Link>
               </li>
@@ -89,7 +87,7 @@ export default function FooterContent({
               <li className="flex items-start">
                 <Mail size={20} className="mr-2 text-gray-400 mt-1" />
                 <span className="text-base text-gray-600 dark:text-gray-400">
-                  contact@mimiai.example.com
+                  contact@mimiai.com
                 </span>
               </li>
               <li className="flex items-start">

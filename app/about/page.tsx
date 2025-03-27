@@ -307,7 +307,7 @@ export default function About() {
           </motion.div>
                   {/* 联系方式 */}
                   <motion.div 
-                    className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto"
+                    className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mt-16"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.4, staggerChildren: 0.1 }}
