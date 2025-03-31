@@ -101,4 +101,18 @@ export function formatMessage(raw: string): string {
   
     return formatted;
   }
-  
+
+/**
+ * 格式化聊天內容，處理 Gemini AI 回傳的文字內容
+ * 將標點符號、列表項目、粗體文字等進行格式化處理
+ */
+export function formatChatContent(content: string): string {
+  // Format text with ** for bold styling and * for italic styling
+  let formatted = content
+    // Replace **text** with bold text
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    // Replace *text* with italic text
+    .replace(/\*(.*?)\*/g, '$1');
+
+  return formatted;
+}

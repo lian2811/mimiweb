@@ -71,9 +71,9 @@ export default function FooterContent({
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-base text-gray-600 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-400">
-                  {t('footer.blog')}
-                </a>
+                <Link href={`/future-vision`} className="text-base text-gray-600 dark:text-gray-400 hover:text-pink-500 dark:hover:text-pink-400">
+                  {t('footer.futureVision')}
+                </Link>
               </li>
             </ul>
           </div>

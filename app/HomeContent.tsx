@@ -5,13 +5,11 @@ import { motion, Variants } from "framer-motion";
 
 // Define the props interface
 interface HomeContentProps {
-  locale: string;
   fadeIn: Variants; // Using framer-motion's Variants type instead of any
   staggerContainer: Variants; // Using framer-motion's Variants type instead of any
 }
 
 export default function HomeContent({
-  locale,
   fadeIn,
   staggerContainer
 }: HomeContentProps) {
@@ -185,7 +183,7 @@ export default function HomeContent({
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{t('features.feature1.title')}</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">{t('features.feature1.description')}</p>
-                <Link href={`/${locale}/ai-magic`} className="text-pink-500 font-medium inline-flex items-center">
+                <Link href={`/ai-magic`} className="text-pink-500 font-medium inline-flex items-center">
                   {t('features.learnMore')}
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
@@ -205,7 +203,7 @@ export default function HomeContent({
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{t('features.feature2.title')}</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">{t('features.feature2.description')}</p>
-                <Link href={`/${locale}/ai-magic`} className="text-blue-500 font-medium inline-flex items-center">
+                <Link href={`/ai-magic`} className="text-blue-500 font-medium inline-flex items-center">
                   {t('features.learnMore')}
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
@@ -225,7 +223,7 @@ export default function HomeContent({
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{t('features.feature3.title')}</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">{t('features.feature3.description')}</p>
-                <Link href={`/${locale}/ai-magic`} className="text-violet-500 font-medium inline-flex items-center">
+                <Link href={`/ai-magic`} className="text-violet-500 font-medium inline-flex items-center">
                   {t('features.learnMore')}
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>

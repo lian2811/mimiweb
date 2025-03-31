@@ -58,11 +58,14 @@ export default function NavbarContent({
             <Link href={`/about`} className="text-base font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] hover:opacity-80 transition-colors">
               {t('navigation.about')}
             </Link>
-            <Link href={`/subscription`} className="text-base font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] hover:opacity-80 transition-colors">
-              {t('navigation.pricing')}
+            <Link href={`/future-vision`} className="text-base font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] hover:opacity-80 transition-colors">
+              {t('navigation.futureVision')}
             </Link>
             <Link href={`/ai-magic`} className="text-base font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] hover:opacity-80 transition-colors">
               {t('navigation.AI Showcase')}
+            </Link>
+            <Link href={`/subscription`} className="text-base font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] hover:opacity-80 transition-colors">
+              {t('navigation.pricing')}
             </Link>
 
             {/* Language Toggle */}
@@ -133,11 +136,11 @@ export default function NavbarContent({
               {t('navigation.about')}
             </Link>
             <Link 
-              href={`/subscription`}
+              href={`/future-vision`}
               className="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-gray-100"
               onClick={() => setIsMenuOpen(false)}
             >
-              {t('navigation.pricing')}
+              {t('navigation.futureVision')}
             </Link>
             <Link 
               href={`/ai-magic`}
@@ -145,6 +148,13 @@ export default function NavbarContent({
               onClick={() => setIsMenuOpen(false)}
             >
               {t('navigation.AI Showcase')}
+            </Link>
+            <Link 
+              href={`/subscription`}
+              className="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-gray-100"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t('navigation.pricing')}
             </Link>
 
             <div className="flex items-center justify-between pt-2 pb-1 border-t border-gray-200">

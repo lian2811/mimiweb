@@ -1,8 +1,8 @@
 "use client";
 
-import HomeContent from "./HomeContent";
+import FutureVisionContent from "./FutureVisionContent";
 
-export default function Home() {
+export default function FutureVision() {
 
   // 動畫變體
   const fadeIn = {
@@ -24,10 +24,23 @@ export default function Home() {
     }
   };
 
+  const floatAnimation = {
+    hidden: { y: 0 },
+    visible: {
+      y: [0, -10, 0],
+      transition: {
+        repeat: Infinity,
+        duration: 3,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
-    <HomeContent 
+    <FutureVisionContent 
       fadeIn={fadeIn}
       staggerContainer={staggerContainer}
+      floatAnimation={floatAnimation}
     />
   );
 }

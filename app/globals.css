@@ -2,8 +2,6 @@
 @plugin "tailwind-scrollbar";
 @plugin "tailwindcss-animate";
 
-@theme
-
 :root {
   --background: #ffffff;
   --foreground: #171717;

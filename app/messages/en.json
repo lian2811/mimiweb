@@ -14,7 +14,8 @@
     "lightMode": "Light Mode",
     "darkMode": "Dark Mode",
     "ai-magic": "AI Magic",
-    "AI Showcase": "AI Showcase"
+    "AI Showcase": "AI Showcase",
+    "futureVision": "Future Vision"
   },
   "home": {
     "hero": {
@@ -174,7 +175,8 @@
     "address": "Xinyi District, Taipei City",
     "rights": "All Rights Reserved",
     "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "futureVision": "Future Vision"
   },
   "ai-magic": {
     "title": "AI Magic Showcase",
@@ -253,6 +255,73 @@
       "10": "Xu Hour (19:00-21:00)",
       "11": "Hai Hour (21:00-23:00)",
       "12": "Late Zi Hour (23:00-0:00)"
+    }
+  },
+  "futureVision": {
+    "hero": {
+      "title": "Experience the Future of",
+      "titleHighlight": "AI Companions",
+      "subtitle": "Discover our intelligent companions that adapt, learn, and grow with you",
+      "exploreCreatures": "Explore Creatures",
+      "hideCreatures": "Hide Creatures",
+      "learnMore": "Learn More"
+    },
+    "creatureShowcase": {
+      "title": "Meet Our AI Companions",
+      "subtitle": "Our intelligent creatures are designed to understand and assist you in unique ways"
+    },
+    "creatures": {
+      "aiAssistant": {
+        "name": "Smart AI Assistant",
+        "description": "Your personal digital helper that understands natural language and completes tasks for you"
+      },
+      "personalAgent": {
+        "name": "Adorable Companion",
+        "description": "A friendly and cute AI friend that grows with you and adapts to your preferences"
+      },
+      "smartCompanion": {
+        "name": "Intelligence Network",
+        "description": "A sophisticated AI system that connects to your devices and helps coordinate your digital life"
+      }
+    },
+    "vision": {
+      "title": "Our Future Vision",
+      "point1": {
+        "title": "Human-AI Collaboration",
+        "description": "We're creating companions that work alongside humans, enhancing capabilities without replacing human connection"
+      },
+      "point2": {
+        "title": "Emotional Intelligence",
+        "description": "Our AI companions understand context, emotion, and can respond appropriately to your needs"
+      },
+      "point3": {
+        "title": "Continuous Learning",
+        "description": "These companions evolve and improve over time, learning from interactions to serve you better"
+      },
+      "highlight": {
+        "title": "The Future is Here",
+        "description": "Experience the next generation of AI companions today",
+        "cta": "Explore AI Magic"
+      }
+    },
+    "aiDemo": {
+      "title": "Interactive AI Experience",
+      "subtitle": "See how our AI companions interact and assist in real-time",
+      "windowTitle": "AI Companion Demo",
+      "inputPlaceholder": "Type your message here...",
+      "conversation": {
+        "greeting": "Hello! I'm your AI companion. How can I help you today?",
+        "user1": "Can you help me organize my schedule for tomorrow?",
+        "ai1": "Of course! I can help you organize your schedule. Would you like me to check your calendar and suggest a plan based on your priorities?",
+        "user2": "Yes, and please remind me about my doctor's appointment at 2pm.",
+        "ai2": "I've added a reminder for your doctor's appointment at 2pm tomorrow. I've also organized your schedule based on your priorities, with focused work time in the morning and meetings in the late afternoon."
+      }
+    },
+    "cta": {
+      "title": "Ready to Meet Your AI Companion?",
+      "description": "Join us on this journey to the future of AI companions and experience a new way of interacting with technology.",
+      "primaryButton": "Explore AI Magic",
+      "secondaryButton": "Learn More"
     }
   }
 }

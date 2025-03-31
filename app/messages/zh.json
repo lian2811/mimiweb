@@ -14,7 +14,8 @@
     "lightMode": "亮色模式",
     "darkMode": "暗色模式",
     "contact": "聯絡我們",
-    "ai-magic": "AI 魔法"
+    "ai-magic": "AI 魔法",
+    "futureVision": "未来展望"
   },
   "home": {
     "hero": {
@@ -173,7 +174,8 @@
     "address": "台北市信義區",
     "rights": "保留所有權利",
     "privacy": "隱私政策",
-    "terms": "服務條款"
+    "terms": "服務條款",
+    "futureVision": "未来展望"
   },
   "ai-magic": {
     "title": "AI 魔法展示",
@@ -252,6 +254,73 @@
       "10": "戌時 (19:00-21:00)",
       "11": "亥時 (21:00-23:00)",
       "12": "晚子時 (23:00-0:00)"
+    }
+  },
+  "futureVision": {
+    "hero": {
+      "title": "體驗未來的",
+      "titleHighlight": "AI 伴侶",
+      "subtitle": "探索我們智能伴侶，能夠適應、學習並與您一同成長",
+      "exploreCreatures": "探索生物",
+      "hideCreatures": "隱藏生物",
+      "learnMore": "了解更多"
+    },
+    "creatureShowcase": {
+      "title": "認識我們的 AI 伴侶",
+      "subtitle": "我們的智能生物經過設計，能以獨特的方式理解並協助您"
+    },
+    "creatures": {
+      "aiAssistant": {
+        "name": "智能 AI 助手",
+        "description": "您的個人數位助手，能理解自然語言並為您完成任務"
+      },
+      "personalAgent": {
+        "name": "可愛伴侶",
+        "description": "一個友好且可愛的 AI 朋友，能與您一同成長並適應您的喜好"
+      },
+      "smartCompanion": {
+        "name": "智能網絡",
+        "description": "一個精密的 AI 系統，能連接您的裝置並協調您的數位生活"
+      }
+    },
+    "vision": {
+      "title": "我們的未來願景",
+      "point1": {
+        "title": "人機協作",
+        "description": "我們正在創造能夠與人類並肩工作的伴侶，提升能力而不取代人與人之間的連接"
+      },
+      "point2": {
+        "title": "情感智能",
+        "description": "我們的 AI 伴侶能理解情境、情緒，並適當地回應您的需求"
+      },
+      "point3": {
+        "title": "持續學習",
+        "description": "這些伴侶會隨著時間演進並改進，從互動中學習以更好地為您服務"
+      },
+      "highlight": {
+        "title": "未來就在眼前",
+        "description": "今天就體驗新一代的 AI 伴侶",
+        "cta": "探索 AI 魔法"
+      }
+    },
+    "aiDemo": {
+      "title": "互動式 AI 體驗",
+      "subtitle": "看看我們的 AI 伴侶如何即時互動和協助",
+      "windowTitle": "AI 伴侶演示",
+      "inputPlaceholder": "在此輸入訊息...",
+      "conversation": {
+        "greeting": "您好！我是您的 AI 伴侶。今天有什麼可以幫助您的嗎？",
+        "user1": "你能幫我安排明天的行程嗎？",
+        "ai1": "當然可以！我可以幫您安排行程。您希望我查看您的日曆並根據您的優先事項提供計劃建議嗎？",
+        "user2": "是的，並請提醒我下午2點的醫生預約。",
+        "ai2": "我已經為您的明天下午2點的醫生預約添加了提醒。我還根據您的優先事項安排了您的日程，上午安排了專注工作時間，下午晚些時候安排了會議。"
+      }
+    },
+    "cta": {
+      "title": "準備好認識您的 AI 伴侶了嗎？",
+      "description": "與我們一起踏上這趟 AI 伴侶的未來之旅，體驗與科技互動的全新方式。",
+      "primaryButton": "探索 AI 魔法",
+      "secondaryButton": "了解更多"
     }
   }
 }
