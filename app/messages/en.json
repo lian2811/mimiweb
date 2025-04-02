@@ -189,6 +189,12 @@
         "buttonText": "View Purple Star Chart",
         "comingSoon": "Coming Soon!"
       },
+      "mimiChat": {
+        "title": "Mimi AI Chat",
+        "description": "Intelligent AI chat assistant to answer questions and create content",
+        "buttonText": "Try Mimi Chat Now",
+        "comingSoon": "Start a conversation with our AI assistant!"
+      },
       "tarot": {
         "title": "Tarot Reading",
         "description": "Explore your future through digital tarot card reading",
@@ -255,6 +261,24 @@
       "10": "Xu Hour (19:00-21:00)",
       "11": "Hai Hour (21:00-23:00)",
       "12": "Late Zi Hour (23:00-0:00)"
+    },
+    "chat": {
+      "assistant": "Purple Star AI Assistant",
+      "online": "Online",
+      "chartLoaded": "Chart data loaded",
+      "aiCanAnalyze": "AI assistant can analyze it for you",
+      "thinking": "Thinking",
+      "channeling": "Channeling",
+      "inputPlaceholder": "Enter message...",
+      "send": "Send",
+      "continueIteration": "Do you want to continue to iterate?",
+      "suggestedQuestions": "Suggested questions",
+      "questions": {
+        "birthInfo": "I am a male born on June 15, 1990 during Zi hour",
+        "analyzePalace": "Help me analyze this chart",
+        "purpleStar": "What is the meaning of Purple Star and Heavenly Fortune in the same palace?"
+      },
+      "welcome": "Hello! I am the Purple Star Assistant, I can discuss your chart and interpret Purple Star Astrology. How can I help you?"
     }
   },
   "futureVision": {

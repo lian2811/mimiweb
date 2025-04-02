@@ -1,7 +1,11 @@
-// This is a server component (no "use client" directive)
+"use client";
+
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, User, LogOut } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 
 // Define props interface
 interface NavbarContentProps {
@@ -20,8 +24,36 @@ export default function NavbarContent({
   alternateLocale,
   switchLocale
 }: NavbarContentProps) {
-  // Use translations in the server component
+  // Use translations
   const t = useTranslations();
+  
+  // Get user session
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
+  
+  // User dropdown state
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setIsUserMenuOpen(false);
+    };
+
+    if (isUserMenuOpen) {
+      document.addEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isUserMenuOpen]);
+
+  // Handle user menu toggle (prevent event bubbling)
+  const toggleUserMenu = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsUserMenuOpen(!isUserMenuOpen);
+  };
 
   return (
     <header 
@@ -70,7 +102,7 @@ export default function NavbarContent({
 
             {/* Language Toggle */}
             <button 
-              onClick={() => switchLocale(alternateLocale)}
+              onClick={(e) => { e.stopPropagation(); switchLocale(alternateLocale); }}
               className={`flex items-center justify-center space-x-2 px-3 py-1.5 rounded-lg ${
                 isScrolled 
                   ? "bg-white/20 text-pink-400 hover:bg-white/30" 
@@ -81,25 +113,80 @@ export default function NavbarContent({
               <span className="text-sm font-semibold">{t('common.languageSwitch')}</span>
             </button>
 
-            {/* Login/Register Buttons */}
-            <div className="flex items-center space-x-2">
-              <Link 
-                href={`/login`} 
-                className={`px-3 py-1.5 text-base font-semibold rounded-lg ${
-                  isScrolled 
-                    ? "text-pink-500 hover:bg-white/20" 
-                    : "text-pink-400 hover:bg-gray-100"
-                } transition-colors`}
-              >
-                {t('navigation.login')}
-              </Link>
-              <Link 
-                href={`/register`} 
-                className="px-3 py-1.5 text-base font-semibold text-white bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg hover:from-pink-600 hover:to-violet-600 transition-colors"
-              >
-                {t('navigation.register')}
-              </Link>
-            </div>
+            {/* Login/Register Buttons or User Profile */}
+            {loading ? (
+              // Loading state
+              <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse"></div>
+            ) : session?.user ? (
+              // Logged in state
+              <div className="relative">
+                <button 
+                  onClick={toggleUserMenu}
+                  className="flex items-center space-x-2 focus:outline-none"
+                >
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-pink-500">
+                    {session.user.image ? (
+                      <img 
+                        src={session.user.image} 
+                        alt={session.user.name || "User"} 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center w-full h-full bg-gradient-to-r from-pink-400 to-purple-500 text-white text-sm font-bold">
+                        {session.user.name?.[0] || "U"}
+                      </div>
+                    )}
+                  </div>
+                  <span className="hidden sm:inline-block text-sm font-medium text-white">
+                    {session.user.name || "User"}
+                  </span>
+                </button>
+                
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 py-2 bg-white rounded-lg shadow-xl z-10">
+                    <div className="px-4 py-2 border-b border-gray-100">
+                      <p className="text-sm font-semibold text-gray-900">{session.user.name}</p>
+                      <p className="text-xs text-gray-500 truncate">{session.user.email}</p>
+                    </div>
+                    <Link 
+                      href="/profile" 
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <User size={16} className="mr-2" />
+                      {t('navigation.profile')}
+                    </Link>
+                    <button 
+                      onClick={() => signOut()}
+                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center"
+                    >
+                      <LogOut size={16} className="mr-2" />
+                      {t('navigation.logout')}
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              // Logged out state
+              <div className="flex items-center space-x-2">
+                <Link 
+                  href={`/login`} 
+                  className={`px-3 py-1.5 text-base font-semibold rounded-lg ${
+                    isScrolled 
+                      ? "text-pink-500 hover:bg-white/20" 
+                      : "text-pink-400 hover:bg-gray-100"
+                  } transition-colors`}
+                >
+                  {t('navigation.login')}
+                </Link>
+                <Link 
+                  href={`/register`} 
+                  className="px-3 py-1.5 text-base font-semibold text-white bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg hover:from-pink-600 hover:to-violet-600 transition-colors"
+                >
+                  {t('navigation.register')}
+                </Link>
+              </div>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -169,22 +256,43 @@ export default function NavbarContent({
                 </button>
               </div>
 
-              <div>
-                <Link 
-                  href={`/login`} 
-                  className="inline-block px-3 py-1.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {t('navigation.login')}
-                </Link>
-                <Link 
-                  href={`/register`} 
-                  className="inline-block ml-2 px-3 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg hover:from-pink-600 hover:to-violet-600"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {t('navigation.register')}
-                </Link>
-              </div>
+              {/* Mobile Login/Register */}
+              {!session ? (
+                <div>
+                  <Link 
+                    href={`/login`} 
+                    className="inline-block px-3 py-1.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {t('navigation.login')}
+                  </Link>
+                  <Link 
+                    href={`/register`} 
+                    className="inline-block ml-2 px-3 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg hover:from-pink-600 hover:to-violet-600"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {t('navigation.register')}
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <Link 
+                    href="/profile"
+                    className="inline-block px-3 py-1.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User size={16} className="inline mr-1" />
+                    {t('navigation.profile')}
+                  </Link>
+                  <button 
+                    onClick={() => signOut()}
+                    className="inline-block ml-2 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-gray-100 rounded-lg"
+                  >
+                    <LogOut size={16} className="inline mr-1" />
+                    {t('navigation.logout')}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

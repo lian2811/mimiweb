@@ -188,6 +188,12 @@
         "buttonText": "查看紫微星盤",
         "comingSoon": "敬請期待！"
       },
+      "mimiChat": {
+        "title": "Mimi AI 聊天",
+        "description": "智能 AI 聊天助手，回答問題、創建內容",
+        "buttonText": "立即體驗 Mimi Chat",
+        "comingSoon": "與 AI 助手展開對話！"
+      },
       "tarot": {
         "title": "塔羅牌占卜",
         "description": "通過數字塔羅牌來探索你的未來",
@@ -254,6 +260,24 @@
       "10": "戌時 (19:00-21:00)",
       "11": "亥時 (21:00-23:00)",
       "12": "晚子時 (23:00-0:00)"
+    },
+    "chat": {
+      "assistant": "紫微 AI 助手",
+      "online": "在線",
+      "chartLoaded": "命盤數據已載入",
+      "aiCanAnalyze": "AI 助手可以為您分析",
+      "thinking": "思考中",
+      "channeling": "解析中",
+      "inputPlaceholder": "輸入訊息...",
+      "send": "發送",
+      "continueIteration": "您想繼續深入分析嗎？",
+      "suggestedQuestions": "建議問題",
+      "questions": {
+        "birthInfo": "我是1990年6月15日子時出生的男生",
+        "analyzePalace": "幫我分析這個命盤",
+        "purpleStar": "紫微星和天府星同宮有什麼意義？"
+      },
+      "welcome": "您好！我是紫微星盤助手，我可以討論您的命盤並解釋紫微斗數。有什麼可以幫您的嗎？"
     }
   },
   "futureVision": {
