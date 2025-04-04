@@ -83,8 +83,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({ chartData, onChartDataUpdate }) => {
       
       // 更新引用，这样我们可以在下次聊天时知道这是最新的命盘
       lastSentChartRef.current = currentChartFingerprint;
-      
-      console.log("命盘数据已更新，新指纹:", currentChartFingerprint);
     }
   }, [chartData]);
 

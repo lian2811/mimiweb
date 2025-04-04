@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-
-// 這裡應導入實際的資料庫模型
-// 範例: import { User } from "@/models/User";
+import { mongoPrisma } from "@/lib/mongoPrisma";
 
 export async function POST(request: Request) {
   try {
@@ -17,9 +15,9 @@ export async function POST(request: Request) {
     }
 
     // 檢查用戶是否已存在
-    // 在實際應用中，這裡應從資料庫檢查
-    // 範例: const existingUser = await User.findOne({ email });
-    const existingUser = false;
+    const existingUser = await mongoPrisma.mongoUser.findUnique({
+      where: { email }
+    });
 
     if (existingUser) {
       return NextResponse.json(
@@ -33,21 +31,22 @@ export async function POST(request: Request) {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // 創建新用戶
-    // 在實際應用中，這裡應保存到資料庫
-    // 範例: const newUser = await User.create({ name, email, password: hashedPassword });
-    const newUser = {
-      id: Date.now().toString(),
-      name,
-      email,
-      password: hashedPassword,
-      createdAt: new Date()
-    };
+    const newUser = await mongoPrisma.mongoUser.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        role: 'user',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    });
 
     // 移除密碼後返回用戶資料
     const { password: _password, ...userWithoutPassword } = newUser;
 
     return NextResponse.json(
-      { message: "註冊成功", user: userWithoutPassword, _password},
+      { message: "註冊成功", user: userWithoutPassword },
       { status: 201 }
     );
   } catch (error) {

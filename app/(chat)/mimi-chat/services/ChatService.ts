@@ -1,21 +1,27 @@
 // app/mimi-chat/services/ChatService.ts
 import { Message } from '../components/types';
+import { getGeminiSystemInstructionText } from '@/utils/gemini';
 
 // 配置常量
 const API_ENDPOINTS = {
   MCP: '/api/mcp',
-  ZIWEI: '/api/ziwei/route'
+  GEMINI: '/api/gemini'  // 修正 Gemini API 的端點
 };
 
 // MCP 工具 ID
 const MCP_TOOLS = {
   ZIWEI_SPECIALIST: 'ziwei-specialist-chat',
-  HYBRID_QA: 'hybrid-qa',
   OPENAI_CHAT: 'openai-chat'
 };
 
 // 模擬流式響應的打字速度（毫秒/字符）
 const TYPING_SPEED = 15;
+
+// 定義不同模型的系統提示詞
+const MODEL_SYSTEM_PROMPTS = {
+  gemini: getGeminiSystemInstructionText(),
+  'mcp-ziwei': `你是一位精通紫微斗數的命理師，名字叫MiMi。您能根據用戶提供的生辰八字生成紫微命盤，並作出專業詳盡的解讀。請用繁體中文回應。`,
+};
 
 /**
  * 檢查是否在瀏覽器環境中運行
@@ -28,6 +34,7 @@ const isBrowser = typeof window !== 'undefined';
 export class ChatService {
   private sessionId: string;
   private eventSource: any | null = null;
+  private geminiEventSource: any | null = null;
   
   constructor() {
     this.sessionId = Math.random().toString(36).substring(2, 15);
@@ -98,6 +105,58 @@ export class ChatService {
     onError: (error: string) => void
   ): Promise<void> {
     try {
+      // 對於 Gemini 模型，使用 POST 請求處理
+      if (selectedModel === 'gemini') {
+        try {
+          // 獲取 Gemini 模型的系統提示詞
+          const systemPrompt = MODEL_SYSTEM_PROMPTS.gemini;
+          
+          // 使用普通的 POST 請求來避免 SSE 連接的問題
+          const response = await fetch(API_ENDPOINTS.GEMINI, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              messages: [...messages, userMessage].map(msg => ({
+                role: msg.role,
+                content: msg.content
+              })),
+              systemPrompt: systemPrompt // 傳遞系統提示詞
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+          }
+
+          const data = await response.json();
+          
+          // 提取回覆文本
+          const assistantContent = data.message || data.content || "No response received";
+          
+          // 使用打字效果模擬流式響應
+          let currentIndex = 0;
+          onStreamingUpdate('');
+          
+          const typingInterval = setInterval(() => {
+            if (currentIndex < assistantContent.length) {
+              currentIndex++;
+              onStreamingUpdate(assistantContent.substring(0, currentIndex));
+            } else {
+              clearInterval(typingInterval);
+              onComplete(assistantContent);
+            }
+          }, TYPING_SPEED);
+        } catch (error) {
+          console.error('Error with Gemini API:', error);
+          onError(error instanceof Error ? error.message : 'An error occurred with the Gemini API');
+        }
+        
+        return;
+      }
+      
+      // 對於其他模型，使用原有的方法
       // 選擇合適的 API 端點
       let endpoint = API_ENDPOINTS.MCP;
       let payload: any = {
@@ -105,9 +164,7 @@ export class ChatService {
         type: 'invoke',
         tool: selectedModel === 'mcp-ziwei' 
           ? MCP_TOOLS.ZIWEI_SPECIALIST
-          : selectedModel === 'hybrid-qa' 
-            ? MCP_TOOLS.HYBRID_QA
-            : MCP_TOOLS.OPENAI_CHAT,
+          : MCP_TOOLS.OPENAI_CHAT,
         params: {
           messages: [...messages, userMessage].map(msg => ({
             role: msg.role,
@@ -117,29 +174,6 @@ export class ChatService {
           stream: true
         }
       };
-
-      // 對於 Gemini 模型，使用不同的端點
-      if (selectedModel === 'gemini') {
-        endpoint = API_ENDPOINTS.ZIWEI;
-        payload = {
-          messages: [...messages, userMessage].map(msg => ({
-            role: msg.role,
-            content: msg.content
-          })),
-          stream: true
-        };
-      }
-
-      // 對於 hybrid-qa，需要包含向量集合和圖數據庫
-      if (selectedModel === 'hybrid-qa') {
-        payload.params = {
-          query: userMessage.content,
-          vectorCollection: 'documents',
-          graphDatabase: 'knowledge',
-          graphDepth: 2,
-          vectorResults: 5
-        };
-      }
 
       // 發送請求
       const response = await fetch(endpoint, {
@@ -157,16 +191,8 @@ export class ChatService {
       // 模擬流式響應
       const data = await response.json();
       
-      // 根據響應格式提取助手的消息
-      let assistantContent = '';
-      
-      if (selectedModel === 'gemini') {
-        assistantContent = data.message || data.content || "No response received";
-      } else if (selectedModel === 'hybrid-qa') {
-        assistantContent = data.result?.content?.[0]?.text || "No information found for your query";
-      } else {
-        assistantContent = data.result?.content?.[0]?.text || "No response received";
-      }
+      // 提取助手的消息
+      const assistantContent = data.result?.content?.[0]?.text || "No response received";
 
       // 使用打字效果模擬流式響應
       let currentIndex = 0;
@@ -194,9 +220,15 @@ export class ChatService {
    * 關閉 SSE 連接
    */
   public close(): void {
-    if (isBrowser && this.eventSource) {
-      this.eventSource.close();
-      this.eventSource = null;
+    if (isBrowser) {
+      if (this.eventSource) {
+        this.eventSource.close();
+        this.eventSource = null;
+      }
+      if (this.geminiEventSource) {
+        this.geminiEventSource.close();
+        this.geminiEventSource = null;
+      }
     }
   }
   

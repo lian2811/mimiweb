@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FaUser, FaCopy, FaCheck, FaTrash } from 'react-icons/fa';
+import { FaCopy, FaCheck } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { Message, modelOptions } from './types';
 import ReactMarkdown from 'react-markdown';
@@ -13,7 +13,7 @@ interface MessageItemProps {
   onDelete?: () => void;
 }
 
-export default function MessageItem({ message, onDelete }: MessageItemProps) {
+export default function MessageItem({ message }: MessageItemProps) {
   const [copied, setCopied] = useState(false);
   
   const isUser = message.role === 'user';
@@ -31,82 +31,78 @@ export default function MessageItem({ message, onDelete }: MessageItemProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // 讓訊息框根據內容自動調整寬度，設置最小和最大寬度
+  const containerStyles = isUser
+    ? 'ml-auto max-w-fit min-w-[100px] text-right'  // 使用者訊息顯示在右側，文字靠右
+    : 'mr-auto max-w-fit min-w-[100px] text-left'; // AI 訊息顯示在左側，文字靠左
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className={`p-4 ${isUser ? 'bg-blue-900/30' : 'bg-gray-800/40'} backdrop-blur-sm rounded-xl shadow-lg`}
+      className={`${containerStyles} mb-2`}
     >
-      <div className="flex mb-2 items-center">
-        {isUser ? (
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-lg mr-2 shadow-md">
-            <FaUser size={14} />
-          </div>
-        ) : (
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-lg mr-2 shadow-md">
-            {getModelIcon(message.model || 'gemini')}
-          </div>
-        )}
-        <div className="font-medium text-white">
-          {isUser ? 'You' : 'Mimi AI'}
-        </div>
-        
-        <div className="ml-auto flex space-x-2">
-          {!isUser && (
+      <div className={`p-2 ${isUser ? 'bg-gradient-to-r from-blue-600/80 to-indigo-600/80' : 'bg-gradient-to-r from-gray-800/90 to-gray-700/80'} backdrop-blur-sm rounded-xl shadow-lg border ${isUser ? 'border-blue-500/30' : 'border-gray-600/30'}`}>
+        {/* 用戶訊息不顯示頭部元素 */}
+        {!isUser && (
+          <div className="flex mb-1 items-center">
+            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-sm mr-2 shadow-md">
+              {getModelIcon(message.model || 'gemini')}
+            </div>
+            <div className="font-medium text-white text-sm">
+              Mimi AI
+            </div>
+            
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={copyToClipboard}
-              className="text-gray-400 hover:text-white transition-colors p-1"
+              className="ml-auto text-gray-400 hover:text-white transition-colors p-1"
               aria-label="Copy message"
             >
-              {copied ? <FaCheck size={14} className="text-green-500" /> : <FaCopy size={14} />}
+              {copied ? <FaCheck size={12} className="text-green-500" /> : <FaCopy size={12} />}
             </motion.button>
-          )}
-          
-          {onDelete && (
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={onDelete}
-              className="text-gray-400 hover:text-red-500 transition-colors p-1"
-              aria-label="Delete message"
+          </div>
+        )}
+        
+        <div className={`${isUser ? '' : 'pl-8'} text-gray-200 space-y-2 markdown-content`}>
+          {isUser ? (
+            <p className="whitespace-pre-wrap text-sm">{message.content}</p>
+          ) : (
+            <ReactMarkdown
+              components={{
+                code({inline, className, children, ...props}: { inline?: boolean; className?: string; children?: React.ReactNode }) {
+                  const match = /language-(\w+)/.exec(className || '');
+                  return !inline && match ? (
+                    <SyntaxHighlighter
+                      style={atomDark as any}
+                      language={match[1]}
+                      PreTag="div"
+                      {...props}
+                    >
+                      {String(children).replace(/\n$/, '')}
+                    </SyntaxHighlighter>
+                  ) : (
+                    <code className={`px-1 py-0.5 rounded bg-gray-700 ${className}`} {...props}>
+                      {children}
+                    </code>
+                  );
+                },
+                p: ({children}) => <p className="my-1 text-sm">{children}</p>,
+                ul: ({children}) => <ul className="list-disc pl-4 my-2 text-sm">{children}</ul>,
+                ol: ({children}) => <ol className="list-decimal pl-4 my-2 text-sm">{children}</ol>,
+                li: ({children}) => <li className="my-1 text-sm">{children}</li>,
+                h1: ({children}) => <h1 className="text-lg font-bold mt-4 mb-1 text-sm">{children}</h1>,
+                h2: ({children}) => <h2 className="text-base font-bold mt-3 mb-1 text-sm">{children}</h2>,
+                h3: ({children}) => <h3 className="text-sm font-bold mt-2 mb-1">{children}</h3>,
+                blockquote: ({children}) => <blockquote className="border-l-4 border-gray-500 pl-4 italic my-2 text-sm">{children}</blockquote>,
+              }}
             >
-              <FaTrash size={14} />
-            </motion.button>
+              {message.content}
+            </ReactMarkdown>
           )}
         </div>
-      </div>
-      
-      <div className="pl-10 text-gray-300 space-y-4 markdown-content">
-        {isUser ? (
-          <p className="whitespace-pre-wrap">{message.content}</p>
-        ) : (
-          <ReactMarkdown
-            components={{
-              code({inline, className, children, ...props}: { inline?: boolean; className?: string; children?: React.ReactNode }) {
-                const match = /language-(\w+)/.exec(className || '');
-                return !inline && match ? (
-                  <SyntaxHighlighter
-                    style={atomDark as any}
-                    language={match[1]}
-                    PreTag="div"
-                    {...props}
-                  >
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                );
-              }
-            }}
-          >
-            {message.content}
-          </ReactMarkdown>
-        )}
       </div>
     </motion.div>
   );

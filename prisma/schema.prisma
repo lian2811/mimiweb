@@ -1,0 +1,65 @@
+// This is your MongoDB Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URL")
+}
+
+// 用戶模型
+model MongoUser {
+  id            String    @id @default(cuid()) @map("_id")
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  role          String    @default("user")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("users")
+}
+
+// Define MongoDB specific models
+model MongoMemory {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  content     String
+  embedding   Json?     // Vector embedding for similarity search
+  type        String    // Use string type instead of enum for MongoDB
+  importance  Int       @default(1) // 1-10 scale for memory importance
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  metadata    Json?     // Additional data about this memory
+
+  @@map("memories")
+  @@index([userId], name: "userId_index")
+}
+
+// 對話模型
+model MongoConversation {
+  id          String    @id @default(cuid()) @map("_id")
+  title       String
+  modelId     String
+  lastUpdated DateTime
+  userId      String
+
+  @@map("conversations")
+  @@index([userId], name: "conversation_userId_index")
+}
+
+// 訊息模型
+model MongoMessage {
+  id             String    @id @default(cuid()) @map("_id")
+  role           String
+  content        String
+  timestamp      DateTime
+  model          String?
+  conversationId String
+
+  @@map("messages")
+  @@index([conversationId], name: "conversationId_index")
+}

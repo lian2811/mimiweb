@@ -15,7 +15,9 @@
     "darkMode": "暗色模式",
     "contact": "聯絡我們",
     "ai-magic": "AI 魔法",
-    "futureVision": "未来展望"
+    "futureVision": "未来展望",
+    "profile": "個人資料",
+    "logout": "登出"
   },
   "home": {
     "hero": {

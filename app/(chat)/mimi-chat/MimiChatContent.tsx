@@ -3,11 +3,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { FaRobot, FaArrowUp } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 // 導入組件
 import ChatHeader from './components/ChatHeader';
 import ChatInput from './components/ChatInput';
-import ChatSidebar from './components/ChatSidebar';
 import MessageList from './components/MessageList';
 import ModelSettings from './components/ModelSettings';
 
@@ -16,36 +17,40 @@ import { Message, Conversation, modelOptions } from './components/types';
 
 // 導入服務
 import { getChatService } from './services/ChatService';
-import { 
-  ConversationManager, 
-  getMockConversations, 
-  getMockMessages 
-} from './services/ConversationManager';
+import { ConversationService } from './services/ConversationService';
 
 export default function MimiChatContent() {
+  // 用戶會話
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  
   // 狀態
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isStreaming, setIsStreaming] = useState(false);
   const [currentStreamingMessage, setCurrentStreamingMessage] = useState('');
-  const [selectedModel, setSelectedModel] = useState(modelOptions[0].id);
+  const [selectedModel, setSelectedModel] = useState('gemini');
   const [showSettings, setShowSettings] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [activeConversation, setActiveConversation] = useState<string | null>(null);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  
+  // 對話狀態
+  const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
+  const [isLoadingConversation, setIsLoadingConversation] = useState(false);
   
   // Refs
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const chatServiceRef = useRef<any>(null);
   
-  // 初始化對話管理器
-  const conversationManager = useRef(new ConversationManager([]));
-  
   // 初始化和設置
   useEffect(() => {
+    // 檢查用戶是否已登入
+    if (status === 'unauthenticated') {
+      router.push('/login');
+      return;
+    }
+    
     // 在客戶端初始化聊天服務
     chatServiceRef.current = getChatService();
     
@@ -71,14 +76,13 @@ export default function MimiChatContent() {
           };
           
           setMessages(prev => [...prev, newMessage]);
-          setCurrentStreamingMessage('');
           
-          // 更新對話標題（如果是第一次回覆）
-          if (messages.length === 1 && activeConversation) {
-            const title = conversationManager.current.generateConversationTitle(messages[0].content);
-            conversationManager.current.updateConversationTitle(activeConversation, title);
-            setConversations(conversationManager.current.getConversations());
+          // 如果有活動對話，保存消息到數據庫
+          if (activeConversation && session?.user?.id) {
+            saveMessageToDatabase(newMessage, activeConversation.id);
           }
+          
+          setCurrentStreamingMessage('');
         }
       },
       // 處理連接
@@ -91,10 +95,10 @@ export default function MimiChatContent() {
       }
     );
     
-    // 載入模擬對話
-    const mockConversations = getMockConversations();
-    conversationManager.current = new ConversationManager(mockConversations);
-    setConversations(mockConversations);
+    // 加載用戶的最新對話
+    if (session?.user?.id) {
+      loadLatestConversation();
+    }
     
     // 組件卸載時關閉 SSE 連接
     return () => {
@@ -102,7 +106,156 @@ export default function MimiChatContent() {
         chatServiceRef.current.close();
       }
     };
-  }, []);
+  }, [status, session]);
+  
+  // 加載用戶的對話 - 如果沒有，則創建一個新的
+  const loadLatestConversation = async () => {
+    if (!session?.user?.id) return;
+    
+    setIsLoadingConversation(true);
+    try {
+      // 使用 API 獲取用戶的對話列表
+      const response = await fetch(`/api/conversations?userId=${session.user.id}`);
+      if (!response.ok) throw new Error('Failed to load conversations');
+      
+      const data = await response.json();
+      const conversations = data.conversations || [];
+      
+      // 如果有對話，加載第一個
+      if (conversations.length > 0) {
+        const userConversation = conversations[0];
+        setActiveConversation(userConversation);
+        setSelectedModel(userConversation.modelId);
+        
+        // 加載該對話的訊息
+        await loadConversationMessages(userConversation.id);
+      } else {
+        // 如果沒有對話，創建一個新的
+        await createUserConversation();
+      }
+    } catch (error) {
+      console.error('Error loading user conversation:', error);
+      // 如果加載失敗，嘗試創建新對話
+      await createUserConversation();
+    } finally {
+      setIsLoadingConversation(false);
+    }
+  };
+  
+  // 加載對話訊息
+  const loadConversationMessages = async (conversationId: string) => {
+    try {
+      const response = await fetch(`/api/messages?conversationId=${conversationId}`);
+      if (!response.ok) throw new Error('Failed to load messages');
+      
+      const data = await response.json();
+      console.log('Loaded messages:', data.messages);
+      setMessages(data.messages || []);
+      return data.messages || [];
+    } catch (error) {
+      console.error('Error loading messages:', error);
+      return [];
+    }
+  };
+  
+  // 創建用戶的對話（每個用戶只有一個）
+  const createUserConversation = async () => {
+    if (!session?.user?.id) return null;
+    
+    try {
+      // 使用 API 創建新對話
+      const response = await fetch('/api/conversations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: session.user.id,
+          title: 'Mimi 對話',
+          modelId: selectedModel
+        }),
+      });
+      
+      if (!response.ok) throw new Error('Failed to create conversation');
+      
+      const data = await response.json();
+      const newConversation = data.conversation;
+      
+      // 設置為活動對話
+      setActiveConversation(newConversation);
+      setMessages([]);
+      
+      return newConversation;
+    } catch (error) {
+      console.error('Error creating conversation:', error);
+      return null;
+    }
+  };
+
+  // 創建新對話
+  const createNewConversation = async (title?: string) => {
+    if (!session?.user?.id) return;
+    
+    try {
+      const defaultTitle = title || '新對話';
+      
+      // 使用 API 創建新對話
+      const response = await fetch('/api/conversations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: session.user.id,
+          title: defaultTitle,
+          modelId: selectedModel
+        }),
+      });
+      
+      if (!response.ok) throw new Error('Failed to create conversation');
+      
+      const data = await response.json();
+      const newConversation = data.conversation;
+      
+      // 設置為活動對話
+      setActiveConversation(newConversation);
+      setMessages([]);
+      
+      return newConversation;
+    } catch (error) {
+      console.error('Error creating conversation:', error);
+      return null;
+    }
+  };
+  
+  // 將消息保存到數據庫
+  const saveMessageToDatabase = async (message: Message, conversationId: string) => {
+    if (!session?.user?.id) return;
+    
+    try {
+      console.log(`保存訊息到對話 ID: ${conversationId}`, message);
+      const response = await fetch('/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+          conversationId
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to save message: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      console.log('訊息保存成功:', data);
+      return data.message;
+    } catch (error) {
+      console.error('Error saving message:', error);
+    }
+  };
   
   // 處理滾動事件顯示/隱藏滾動按鈕
   useEffect(() => {
@@ -130,45 +283,10 @@ export default function MimiChatContent() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, currentStreamingMessage]);
-
-  // 創建新對話
-  const createNewConversation = () => {
-    const newConversationId = conversationManager.current.createNewConversation(selectedModel);
-    setActiveConversation(newConversationId);
-    setConversations(conversationManager.current.getConversations());
-    setMessages([]);
-    setInput('');
-  };
-  
-  // 載入對話
-  const loadConversation = (conversationId: string) => {
-    conversationManager.current.setActiveConversation(conversationId);
-    setActiveConversation(conversationId);
-    
-    // 找到當前對話並更新選中的模型
-    const conversation = conversations.find(c => c.id === conversationId);
-    if (conversation) {
-      setSelectedModel(conversation.modelId);
-    }
-    
-    // 載入模擬消息
-    const mockMessages = getMockMessages(conversationId);
-    setMessages(mockMessages);
-    
-    // 在移動端選擇對話後關閉側邊欄
-    if (window.innerWidth < 768) {
-      setShowSidebar(false);
-    }
-  };
   
   // 發送消息
   const sendMessage = async () => {
     if (!input.trim() || !chatServiceRef.current) return;
-    
-    // 如果沒有活動對話，創建一個新對話
-    if (!activeConversation) {
-      createNewConversation();
-    }
     
     const messageId = Math.random().toString(36).substring(2, 10);
     const userMessage: Message = {
@@ -184,6 +302,26 @@ export default function MimiChatContent() {
     setIsLoading(true);
     setIsStreaming(true);
     
+    // 如果沒有活動對話，先確保用戶有一個對話
+    let currentConversation = activeConversation;
+    if (!activeConversation && session?.user?.id) {
+      try {
+        // 創建用戶的對話
+        const newConversation = await createUserConversation();
+        if (newConversation) {
+          currentConversation = newConversation;
+          
+          // 創建成功後立即保存用戶訊息
+          await saveMessageToDatabase(userMessage, newConversation.id);
+        }
+      } catch (error) {
+        console.error('Error creating conversation:', error);
+      }
+    } else if (activeConversation && session?.user?.id) {
+      // 如果已有活動對話，直接保存用戶訊息
+      await saveMessageToDatabase(userMessage, activeConversation.id);
+    }
+    
     // 使用聊天服務發送消息
     chatServiceRef.current.sendMessage(
       selectedModel,
@@ -194,7 +332,7 @@ export default function MimiChatContent() {
         setCurrentStreamingMessage(content);
       },
       // 完成回調
-      (content: string) => {
+      async (content: string) => {
         setIsStreaming(false);
         setIsLoading(false);
         
@@ -208,20 +346,13 @@ export default function MimiChatContent() {
         };
         
         setMessages(prev => [...prev, newMessage]);
+        
+        // 保存助手訊息到數據庫
+        if (currentConversation && session?.user?.id) {
+          await saveMessageToDatabase(newMessage, currentConversation.id);
+        }
+        
         setCurrentStreamingMessage('');
-        
-        // 更新對話標題（如果是第一次交流）
-        if (messages.length === 1 && activeConversation) {
-          const title = conversationManager.current.generateConversationTitle(messages[0].content);
-          conversationManager.current.updateConversationTitle(activeConversation, title);
-          setConversations(conversationManager.current.getConversations());
-        }
-        
-        // 更新對話時間戳
-        if (activeConversation) {
-          conversationManager.current.updateConversationTimestamp(activeConversation);
-          setConversations(conversationManager.current.getConversations());
-        }
       },
       // 錯誤回調
       (error: string) => {
@@ -257,37 +388,16 @@ export default function MimiChatContent() {
       };
       
       setMessages(prev => [...prev, newMessage]);
+      
+      // 保存到數據庫
+      if (activeConversation && session?.user?.id) {
+        saveMessageToDatabase(newMessage, activeConversation.id);
+      }
+      
       setCurrentStreamingMessage('');
     }
   };
-  
-  // 清除聊天歷史
-  const clearChat = () => {
-    setMessages([]);
-    // 如果在對話中，將標題重置為默認值
-    if (activeConversation) {
-      conversationManager.current.updateConversationTitle(activeConversation, '新對話');
-      setConversations(conversationManager.current.getConversations());
-    }
-  };
-  
-  // 刪除對話
-  const deleteConversation = (id: string) => {
-    conversationManager.current.deleteConversation(id);
-    setConversations(conversationManager.current.getConversations());
-    
-    // 如果刪除的是當前活動對話，清除消息
-    if (activeConversation === id) {
-      setActiveConversation(null);
-      setMessages([]);
-    }
-  };
-  
-  // 刪除消息
-  const handleDeleteMessage = (index: number) => {
-    setMessages(prev => prev.filter((_, i) => i !== index));
-  };
-  
+
   // 滾動到底部
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -295,36 +405,14 @@ export default function MimiChatContent() {
   
   return (
     <div className="flex h-screen w-screen">
-      {/* 側邊欄 - 對話歷史 */}
-      <AnimatePresence mode="wait">
-        {showSidebar && (
-          <ChatSidebar 
-            conversations={conversations}
-            activeConversation={activeConversation}
-            createNewConversation={createNewConversation}
-            deleteConversation={deleteConversation}
-            setActiveConversation={(id) => {
-              if (id) loadConversation(id);
-              else setActiveConversation(null);
-            }}
-            showSidebar={showSidebar}
-            setShowSidebar={setShowSidebar}
-          />
-        )}
-      </AnimatePresence>
-      
       {/* 主聊天區域 */}
-      <div className="flex flex-col flex-grow bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm rounded-r-xl rounded-l-xl md:rounded-l-none overflow-hidden shadow-2xl">
+      <div className="flex flex-col flex-grow bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-2xl">
         {/* 聊天頭部 */}
         <ChatHeader 
-          showSidebar={showSidebar}
-          setShowSidebar={setShowSidebar}
           showSettings={showSettings}
           setShowSettings={setShowSettings}
-          clearChat={clearChat}
           selectedModel={selectedModel}
           activeConversation={activeConversation}
-          conversations={conversations}
         />
 
         {/* 設置面板 */}
@@ -339,12 +427,20 @@ export default function MimiChatContent() {
           )}
         </AnimatePresence>
 
-        {/* 聊天消息 */}
+        {/* 聊天消息區域 */}
         <div 
           ref={chatContainerRef}
-          className="flex-grow overflow-y-auto p-4 space-y-6 custom-scrollbar"
+          className="flex-grow overflow-y-auto px-4 py-6 space-y-6 custom-scrollbar"
         >
-          {messages.length === 0 ? (
+          {isLoadingConversation ? (
+            <div className="flex items-center justify-center h-full">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full"
+              />
+            </div>
+          ) : messages.length === 0 ? (
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -354,13 +450,13 @@ export default function MimiChatContent() {
               <div className="w-24 h-24 mb-6 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-full flex items-center justify-center shadow-lg">
                 <FaRobot className="text-white text-5xl" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Start a conversation with Mimi AI</h3>
+              <h3 className="text-xl font-bold text-white mb-2">開始與 Mimi AI 對話</h3>
               <p className="text-md text-gray-400 text-center max-w-md">
-                Choose a model from settings and ask a question to get started.
-                Mimi can help with questions, creative tasks, and information.
+                從設置選擇一個模型，並提出問題以開始對話。
+                Mimi 可以幫助回答問題、創建內容以及提供實用信息。
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-6 w-full max-w-lg">
-                {["Tell me about Taiwan's history", "幫我解析紫微命盤", "Create a project plan for a mobile app", "如何提高工作效率?"].map((suggestion, i) => (
+                {["Tell me about Taiwan's history", "Create a project plan for a mobile app", "如何提高工作效率?", "What is the best way to learn programming?"].map((suggestion, i) => (
                   <motion.button
                     key={i}
                     whileHover={{ scale: 1.03, y: -2 }}
@@ -379,7 +475,6 @@ export default function MimiChatContent() {
               isLoading={isLoading}
               streamingContent={currentStreamingMessage}
               selectedModel={selectedModel}
-              onDeleteMessage={handleDeleteMessage}
             />
           )}
           

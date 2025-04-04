@@ -1,10 +1,11 @@
 // 定義消息結構
 export interface Message {
   id: string;
-  role: 'user' | 'assistant' | 'system';
+  role: string;  // 改為更寬鬆的 string 類型，以便與資料庫返回的數據相容
   content: string;
   timestamp: Date;
-  model?: string;
+  model?: string | null;  // 將 model 類型改為 string | null | undefined，以便與資料庫返回的數據相容
+  conversationId?: string;  // 添加此屬性，與資料庫結構相符
 }
 
 // 定義對話結構
@@ -13,6 +14,7 @@ export interface Conversation {
   title: string;
   lastUpdated: Date;
   modelId: string;
+  userId?: string;  // 添加此屬性，與資料庫結構相符
 }
 
 // 定義模型選項

@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SakuraEffect from "@/components/SakuraEffect";
 import TiffanyBubbles from "@/components/TiffanyBubbles";
-import AuthProvider from "@/app/(norm)/providers/AuthProvider";
+import AuthProvider from "@/app/providers/AuthProvider";
 import "@/app/globals.css";
 import React from "react";
 import {NextIntlClientProvider} from 'next-intl';

@@ -4,7 +4,7 @@ import {NextIntlClientProvider} from 'next-intl';
 import {getLocale, getMessages} from 'next-intl/server';
 import SakuraEffect from "@/components/SakuraEffect";
 import TiffanyBubbles from "@/components/TiffanyBubbles";
-import AuthProvider from "@/app/(norm)/providers/AuthProvider";
+import AuthProvider from "@/app/providers/AuthProvider";
 import "@/app/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

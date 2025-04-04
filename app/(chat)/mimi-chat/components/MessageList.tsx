@@ -1,26 +1,25 @@
 'use client';
-
+import { FaRobot } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { Message } from './types';
 import MessageItem from './MessageItem';
 import StreamingMessage from './StreamingMessage';
-import { motion } from 'framer-motion';
 
 interface MessageListProps {
   messages: Message[];
   isLoading: boolean;
   streamingContent: string;
   selectedModel: string;
-  onDeleteMessage: (index: number) => void;
+  onDeleteMessage?: (index: number) => void;
 }
 
-export default function MessageList({ 
+const MessageList = ({ 
   messages, 
   isLoading, 
-  streamingContent, 
-  selectedModel,
-  onDeleteMessage 
-}: MessageListProps) {
+  streamingContent,
+  selectedModel
+}: MessageListProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // 聊天自動滾動到底部
@@ -81,7 +80,6 @@ export default function MessageList({
             <MessageItem 
               key={index} 
               message={message}
-              onDelete={() => onDeleteMessage(index)}
             />
           ))}
           
@@ -91,9 +89,26 @@ export default function MessageList({
               selectedModel={selectedModel} 
             />
           )}
+          
+          {messages.length > 0 && !isLoading && !streamingContent && (
+            <div className="flex justify-center my-8">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-gray-400 text-sm bg-gray-800/30 px-4 py-2 rounded-full shadow border border-gray-700/50"
+              >
+                <div className="flex items-center space-x-2">
+                  <FaRobot className="text-blue-400" />
+                  <span>Mimi is ready for your next question</span>
+                </div>
+              </motion.div>
+            </div>
+          )}
         </>
       )}
       <div ref={messagesEndRef} />
     </motion.div>
   );
-}
+};
+
+export default MessageList;
