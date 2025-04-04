@@ -13,11 +13,11 @@ import MessageList from './components/MessageList';
 import ModelSettings from './components/ModelSettings';
 
 // 導入類型和配置
-import { Message, Conversation, modelOptions } from './components/types';
+import { Message, Conversation } from './components/types';
 
 // 導入服務
 import { getChatService } from './services/ChatService';
-import { ConversationService } from './services/ConversationService';
+
 
 export default function MimiChatContent() {
   // 用戶會話
@@ -171,43 +171,7 @@ export default function MimiChatContent() {
         },
         body: JSON.stringify({
           userId: session.user.id,
-          title: 'Mimi 對話',
-          modelId: selectedModel
-        }),
-      });
-      
-      if (!response.ok) throw new Error('Failed to create conversation');
-      
-      const data = await response.json();
-      const newConversation = data.conversation;
-      
-      // 設置為活動對話
-      setActiveConversation(newConversation);
-      setMessages([]);
-      
-      return newConversation;
-    } catch (error) {
-      console.error('Error creating conversation:', error);
-      return null;
-    }
-  };
-
-  // 創建新對話
-  const createNewConversation = async (title?: string) => {
-    if (!session?.user?.id) return;
-    
-    try {
-      const defaultTitle = title || '新對話';
-      
-      // 使用 API 創建新對話
-      const response = await fetch('/api/conversations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: session.user.id,
-          title: defaultTitle,
+          title: 'MiMi',
           modelId: selectedModel
         }),
       });
@@ -453,7 +417,7 @@ export default function MimiChatContent() {
               <h3 className="text-xl font-bold text-white mb-2">開始與 Mimi AI 對話</h3>
               <p className="text-md text-gray-400 text-center max-w-md">
                 從設置選擇一個模型，並提出問題以開始對話。
-                Mimi 可以幫助回答問題、創建內容以及提供實用信息。
+                MiMi 可以幫助回答問題、創建內容以及提供實用信息。
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-6 w-full max-w-lg">
                 {["Tell me about Taiwan's history", "Create a project plan for a mobile app", "如何提高工作效率?", "What is the best way to learn programming?"].map((suggestion, i) => (

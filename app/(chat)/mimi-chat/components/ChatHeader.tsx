@@ -32,13 +32,13 @@ export default function ChatHeader({
     >
       <div className="flex items-center">
         <div>
-          <h1 className="text-white text-xl font-bold flex items-center">
+          <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 text-xl font-bold flex items-center">
             {activeConversation
               ? activeConversation.title
-              : 'Mimi Chat'}
+              : 'MiMi'}
           </h1>
           <div className="text-xs text-gray-400">
-            Powered by {getModelName(selectedModel)}
+            {getModelName(selectedModel)}
           </div>
         </div>
       </div>

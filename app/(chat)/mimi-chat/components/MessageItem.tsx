@@ -31,10 +31,10 @@ export default function MessageItem({ message }: MessageItemProps) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // 讓訊息框根據內容自動調整寬度，設置最小和最大寬度
+  // 改進訊息框使其更緊貼文字內容
   const containerStyles = isUser
-    ? 'ml-auto max-w-fit min-w-[100px] text-right'  // 使用者訊息顯示在右側，文字靠右
-    : 'mr-auto max-w-fit min-w-[100px] text-left'; // AI 訊息顯示在左側，文字靠左
+    ? 'ml-auto max-w-[70%] min-w-[60px] text-right' // 使用者訊息顯示在右側，文字靠右
+    : 'mr-auto max-w-[70%] min-w-[60px] text-left'; // AI 訊息顯示在左側，文字靠左
 
   return (
     <motion.div
@@ -43,7 +43,7 @@ export default function MessageItem({ message }: MessageItemProps) {
       transition={{ duration: 0.3 }}
       className={`${containerStyles} mb-2`}
     >
-      <div className={`p-2 ${isUser ? 'bg-gradient-to-r from-blue-600/80 to-indigo-600/80' : 'bg-gradient-to-r from-gray-800/90 to-gray-700/80'} backdrop-blur-sm rounded-xl shadow-lg border ${isUser ? 'border-blue-500/30' : 'border-gray-600/30'}`}>
+      <div className={`inline-block px-3 py-2 ${isUser ? 'bg-gradient-to-r from-blue-600/80 to-indigo-600/80' : 'bg-gradient-to-r from-gray-800/90 to-gray-700/80'} backdrop-blur-sm rounded-xl shadow-lg border ${isUser ? 'border-blue-500/30' : 'border-gray-600/30'}`}>
         {/* 用戶訊息不顯示頭部元素 */}
         {!isUser && (
           <div className="flex mb-1 items-center">
@@ -51,7 +51,7 @@ export default function MessageItem({ message }: MessageItemProps) {
               {getModelIcon(message.model || 'gemini')}
             </div>
             <div className="font-medium text-white text-sm">
-              Mimi AI
+              MiMi AI
             </div>
             
             <motion.button
@@ -66,9 +66,9 @@ export default function MessageItem({ message }: MessageItemProps) {
           </div>
         )}
         
-        <div className={`${isUser ? '' : 'pl-8'} text-gray-200 space-y-2 markdown-content`}>
+        <div className={`${isUser ? '' : 'pl-7'} text-gray-200 markdown-content`}>
           {isUser ? (
-            <p className="whitespace-pre-wrap text-sm">{message.content}</p>
+            <p className="whitespace-pre-wrap text-sm leading-relaxed">{message.content}</p>
           ) : (
             <ReactMarkdown
               components={{
@@ -89,14 +89,14 @@ export default function MessageItem({ message }: MessageItemProps) {
                     </code>
                   );
                 },
-                p: ({children}) => <p className="my-1 text-sm">{children}</p>,
-                ul: ({children}) => <ul className="list-disc pl-4 my-2 text-sm">{children}</ul>,
-                ol: ({children}) => <ol className="list-decimal pl-4 my-2 text-sm">{children}</ol>,
-                li: ({children}) => <li className="my-1 text-sm">{children}</li>,
-                h1: ({children}) => <h1 className="text-lg font-bold mt-4 mb-1 text-sm">{children}</h1>,
-                h2: ({children}) => <h2 className="text-base font-bold mt-3 mb-1 text-sm">{children}</h2>,
-                h3: ({children}) => <h3 className="text-sm font-bold mt-2 mb-1">{children}</h3>,
-                blockquote: ({children}) => <blockquote className="border-l-4 border-gray-500 pl-4 italic my-2 text-sm">{children}</blockquote>,
+                p: ({children}) => <p className="my-1 text-sm leading-relaxed">{children}</p>,
+                ul: ({children}) => <ul className="list-disc pl-4 my-1 text-sm">{children}</ul>,
+                ol: ({children}) => <ol className="list-decimal pl-4 my-1 text-sm">{children}</ol>,
+                li: ({children}) => <li className="my-0.5 text-sm">{children}</li>,
+                h1: ({children}) => <h1 className="text-lg font-bold mt-3 mb-1 text-sm">{children}</h1>,
+                h2: ({children}) => <h2 className="text-base font-bold mt-2 mb-1 text-sm">{children}</h2>,
+                h3: ({children}) => <h3 className="text-sm font-bold mt-1 mb-0.5">{children}</h3>,
+                blockquote: ({children}) => <blockquote className="border-l-4 border-gray-500 pl-3 italic my-1 text-sm">{children}</blockquote>,
               }}
             >
               {message.content}

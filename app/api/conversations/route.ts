@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
     const conversation = await mongoPrisma.mongoConversation.create({
       data: {
         id: conversationId,
-        title: title || '新對話',
+        title: title || 'MiMi',
         modelId: modelId || 'gemini',
         lastUpdated: new Date(),
         userId,

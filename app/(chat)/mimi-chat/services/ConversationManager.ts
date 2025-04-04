@@ -48,7 +48,7 @@ export class ConversationManager {
     const newConversationId = `conv-${Date.now()}`;
     const newConversation: Conversation = {
       id: newConversationId,
-      title: '新對話',
+      title: 'MiMi',
       lastUpdated: new Date(),
       modelId
     };

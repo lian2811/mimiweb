@@ -44,7 +44,7 @@ export default function StreamingMessage({ content, selectedModel }: StreamingMe
             {getModelIcon(selectedModel)}
           </div>
           <div className="font-medium text-white">
-            Mimi AI
+            MiMi AI
             <span className="inline-flex items-center ml-2 text-blue-400 text-sm">
               <FaDotCircle 
                 className={`mr-1 transition-opacity duration-300 ${blinkingDot ? 'opacity-100' : 'opacity-30'}`} 

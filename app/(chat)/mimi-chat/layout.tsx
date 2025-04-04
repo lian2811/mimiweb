@@ -10,7 +10,7 @@ import "@/app/globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'Mimi Chat',
+  title: 'MiMi Chat',
   description: 'MiMi AI Chat Interface',
 };
 
